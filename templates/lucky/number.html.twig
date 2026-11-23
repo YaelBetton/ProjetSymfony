@@ -1,8 +1,16 @@
-<!DOCTYPE html>
-<html>
-    <head>
-    </head>
-    <body>
-        <h1>Your lucky number is {{ number }}</h1>
-    </body>
-</html>
+{% extends 'base.html.twig' %}
+
+{% block title %}Nombre porte-bonheur{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <h1>Votre nombre porte-bonheur</h1>
+    </div>
+
+    <p class="lucky-number" aria-live="polite"><strong>{{ number }}</strong></p>
+
+    <div class="actions">
+        <a class="btn btn--primary" href="{{ path('lucky_number') }}">Tirer un nouveau nombre</a>
+        <a class="btn btn--secondary" href="{{ path('index') }}">Revenir à l'accueil</a>
+    </div>
+{% endblock %}

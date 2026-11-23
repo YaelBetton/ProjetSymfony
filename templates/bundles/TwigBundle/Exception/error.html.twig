@@ -1,0 +1,32 @@
+{# Page d'erreur générique en français (affichée en production ; aperçu en dev : /_error/500).
+   Surcharge du template de TwigBundle. #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur {{ status_code }}{% endblock %}
+
+{% block body %}
+    <div class="error-page">
+        <p class="error-page__code" aria-hidden="true">{{ status_code }}</p>
+        <h1>
+            {% if status_code == 404 %}
+                Page introuvable
+            {% elseif status_code == 403 %}
+                Accès refusé
+            {% else %}
+                Une erreur est survenue
+            {% endif %}
+        </h1>
+        <p>
+            {% if status_code == 404 %}
+                La page demandée n'existe pas ou a été supprimée. Vérifiez l'adresse ou utilisez le menu.
+            {% elseif status_code == 403 %}
+                Vous n'avez pas l'autorisation d'accéder à cette page.
+            {% else %}
+                Le serveur n'a pas pu traiter votre demande. Veuillez réessayer dans quelques instants.
+            {% endif %}
+        </p>
+        <div class="actions">
+            <a class="btn btn--primary" href="{{ path('index') }}">Revenir à l'accueil</a>
+        </div>
+    </div>
+{% endblock %}

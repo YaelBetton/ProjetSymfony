@@ -1,5 +1,5 @@
 {{ form_start(form, {attr: {class: 'form', novalidate: 'novalidate'}}) }}
-    {{ include('partials/_required_legend.html.twig') }}
+    {{ include('partials/_form_header.html.twig') }}
 
     {# Erreurs globales du formulaire (ex. jeton CSRF invalide) #}
     {{ form_errors(form) }}

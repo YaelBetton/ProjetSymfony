@@ -175,3 +175,14 @@
     gap: var(--space-3);
     margin-top: var(--space-6);
 }
+
+/* Résumé des erreurs en haut du formulaire */
+.form-summary {
+    padding: var(--space-3) var(--space-4);
+    margin-bottom: var(--space-4);
+    border-left: 4px solid var(--color-danger);
+    border-radius: var(--radius);
+    background-color: var(--color-danger-soft);
+    color: #7f1d1d;
+    font-weight: 600;
+}

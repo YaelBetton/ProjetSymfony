@@ -1,0 +1,10 @@
+{# En-tête commun des formulaires : légende de l'astérisque + résumé des erreurs après envoi.
+   Le résumé (role="alert") est annoncé par les lecteurs d'écran ; app.js place ensuite
+   le focus sur le premier champ en erreur. #}
+<p class="form-legend">Les champs marqués d'un <span class="required-mark" aria-hidden="true">*</span><span class="visually-hidden">astérisque</span> sont obligatoires.</p>
+
+{% if form.vars.submitted and not form.vars.valid %}
+    <div class="form-summary" role="alert">
+        Le formulaire contient des erreurs : corrigez les champs signalés en rouge puis enregistrez à nouveau.
+    </div>
+{% endif %}
