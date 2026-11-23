@@ -1,5 +1,5 @@
 {{ form_start(form, {attr: {class: 'form', novalidate: 'novalidate'}}) }}
-    {{ include('partials/_required_legend.html.twig') }}
+    {{ include('partials/_form_header.html.twig') }}
 
     {# Erreurs globales du formulaire (ex. jeton CSRF invalide) #}
     {{ form_errors(form) }}
@@ -12,7 +12,7 @@
         <div class="form-row{{ form.prixAchat.vars.errors|length ? ' has-error' }}">
             {{ form_label(form.prixAchat) }}
             <div class="input-group">
-                {{ form_widget(form.prixAchat, {attr: form.prixAchat.vars.attr|merge({'aria-describedby': form.prixAchat.vars.id ~ '_help' ~ (form.prixAchat.vars.errors|length ? ' ' ~ form.prixAchat.vars.id ~ '_errors')})}) }}
+                {{ form_widget(form.prixAchat, {attr: form.prixAchat.vars.attr|merge({'aria-describedby': form.prixAchat.vars.id ~ '_help' ~ (form.prixAchat.vars.errors|length ? ' ' ~ form.prixAchat.vars.id ~ '_errors')})|merge(form.prixAchat.vars.errors|length ? {'aria-invalid': 'true'} : {})}) }}
                 <span class="input-group__suffix" aria-hidden="true">€</span>
             </div>
             {{ form_help(form.prixAchat) }}

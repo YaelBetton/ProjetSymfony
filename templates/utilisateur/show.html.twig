@@ -98,7 +98,7 @@
                             {% if jeu.imageUrl %}
                                 <img class="thumb" src="{{ asset(jeu.imageUrl) }}" alt="Jaquette de {{ jeu.titre }}">
                             {% else %}
-                                <span class="thumb thumb--empty" aria-hidden="true">?</span>
+                                <span class="thumb thumb--empty">Aucune image</span>
                             {% endif %}
                         </td>
                         <td class="cell-title"><a href="{{ path('app_jeu_video_show', {'id': jeu.id}) }}"><strong>{{ jeu.titre }}</strong></a></td>
@@ -124,7 +124,7 @@
     </section>
 
     <div class="actions">
-        <a class="btn btn--secondary" href="{{ path('app_utilisateur_index') }}">Retour à la liste</a>
+        <a class="btn btn--secondary" href="{{ path('app_utilisateur_index') }}">Revenir à la liste</a>
         <a class="btn btn--primary" href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">Modifier cet utilisateur</a>
         {{ include('utilisateur/_delete_form.html.twig') }}
     </div>

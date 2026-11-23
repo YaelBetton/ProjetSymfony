@@ -15,7 +15,7 @@
         <div class="form-row{{ form.prix.vars.errors|length ? ' has-error' }}">
             {{ form_label(form.prix) }}
             <div class="input-group">
-                {{ form_widget(form.prix, {attr: form.prix.vars.attr|merge({'aria-describedby': form.prix.vars.id ~ '_help' ~ (form.prix.vars.errors|length ? ' ' ~ form.prix.vars.id ~ '_errors')})}) }}
+                {{ form_widget(form.prix, {attr: form.prix.vars.attr|merge({'aria-describedby': form.prix.vars.id ~ '_help' ~ (form.prix.vars.errors|length ? ' ' ~ form.prix.vars.id ~ '_errors')})|merge(form.prix.vars.errors|length ? {'aria-invalid': 'true'} : {})}) }}
                 <span class="input-group__suffix" aria-hidden="true">€</span>
             </div>
             {{ form_help(form.prix) }}

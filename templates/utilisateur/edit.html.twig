@@ -10,8 +10,8 @@
     {{ include('utilisateur/_form.html.twig', {'button_label': 'Enregistrer les modifications'}) }}
 
     <div class="actions">
-        <a class="btn btn--secondary" href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}">Retour à la collection</a>
-        <a class="btn btn--secondary" href="{{ path('app_utilisateur_index') }}">Retour à la liste</a>
+        <a class="btn btn--secondary" href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}">Revenir à la collection</a>
+        <a class="btn btn--secondary" href="{{ path('app_utilisateur_index') }}">Revenir à la liste</a>
         {{ include('utilisateur/_delete_form.html.twig') }}
     </div>
 {% endblock %}
