@@ -8,8 +8,9 @@
         <a class="btn btn--primary" href="{{ path('app_genre_new') }}">Ajouter un genre</a>
     </div>
 
-    <div class="table-responsive">
-        <table class="table">
+    {# table--cards : sur tablette / téléphone, chaque ligne s'affiche en carte (cf. components.css) #}
+    <div class="table-responsive table-responsive--cards">
+        <table class="table table--cards">
             <caption class="visually-hidden">Liste des genres ({{ genres|length }})</caption>
             <thead>
                 <tr>
@@ -23,11 +24,11 @@
             <tbody>
             {% for genre in genres %}
                 <tr>
-                    <td><strong>{{ genre.nom }}</strong></td>
-                    <td>{{ genre.description }}</td>
-                    <td>{{ include('genre/_statut.html.twig') }}</td>
-                    <td class="text-end">{{ genre.jeuVideos|length }}</td>
-                    <td>
+                    <td class="cell-title"><strong>{{ genre.nom }}</strong></td>
+                    <td data-label="Description">{{ genre.description }}</td>
+                    <td data-label="Statut">{{ include('genre/_statut.html.twig') }}</td>
+                    <td data-label="Nombre de jeux" class="text-end">{{ genre.jeuVideos|length }}</td>
+                    <td class="cell-actions">
                         <div class="actions actions--table">
                             <a class="btn btn--secondary btn--sm" href="{{ path('app_genre_show', {'id': genre.id}) }}">Consulter<span class="visually-hidden"> {{ genre.nom }}</span></a>
                             <a class="btn btn--secondary btn--sm" href="{{ path('app_genre_edit', {'id': genre.id}) }}">Modifier<span class="visually-hidden"> {{ genre.nom }}</span></a>

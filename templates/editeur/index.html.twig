@@ -8,8 +8,9 @@
         <a class="btn btn--primary" href="{{ path('app_editeur_new') }}">Ajouter un éditeur</a>
     </div>
 
-    <div class="table-responsive">
-        <table class="table">
+    {# table--cards : sur tablette / téléphone, chaque ligne s'affiche en carte (cf. components.css) #}
+    <div class="table-responsive table-responsive--cards">
+        <table class="table table--cards">
             <caption class="visually-hidden">Liste des éditeurs ({{ editeurs|length }})</caption>
             <thead>
                 <tr>
@@ -23,18 +24,18 @@
             <tbody>
             {% for editeur in editeurs %}
                 <tr>
-                    <td><strong>{{ editeur.nom }}</strong></td>
-                    <td>{{ editeur.pays }}</td>
-                    <td>{{ include('editeur/_site_web.html.twig') }}</td>
+                    <td class="cell-title"><strong>{{ editeur.nom }}</strong></td>
+                    <td data-label="Pays">{{ editeur.pays }}</td>
+                    <td data-label="Site internet">{{ include('editeur/_site_web.html.twig') }}</td>
                     {# Seuls les 150 premiers caractères de la description sont affichés #}
-                    <td>
+                    <td data-label="Description">
                         {% if editeur.description|length > 150 %}
                             {{ editeur.description|slice(0, 150) }}…
                         {% else %}
                             {{ editeur.description }}
                         {% endif %}
                     </td>
-                    <td>
+                    <td class="cell-actions">
                         <div class="actions actions--table">
                             <a class="btn btn--secondary btn--sm" href="{{ path('app_editeur_show', {'id': editeur.id}) }}">Consulter<span class="visually-hidden"> {{ editeur.nom }}</span></a>
                             <a class="btn btn--secondary btn--sm" href="{{ path('app_editeur_edit', {'id': editeur.id}) }}">Modifier<span class="visually-hidden"> {{ editeur.nom }}</span></a>

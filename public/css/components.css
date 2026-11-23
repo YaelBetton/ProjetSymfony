@@ -162,6 +162,125 @@
     }
 }
 
+/* ---------- Listes responsives (tableaux .table--cards) ----------
+   - Grand écran (≥ 75em / 1200 px) : tableau classique.
+   - PC portable (64em → 75em)       : tableau resserré pour tenir sans défilement.
+   - Tablette / téléphone (< 64em)    : chaque ligne devient une carte, dans le style
+     des cartes de l'accueil (fond blanc, liseré indigo, ombre). 2 colonnes de cartes
+     sur tablette, 1 sur téléphone. Chaque valeur est précédée de son libellé (data-label). */
+@media (min-width: 64em) and (max-width: 74.99em) {
+    .table--cards th,
+    .table--cards td {
+        padding: var(--space-2) var(--space-3);
+    }
+}
+
+@media (max-width: 63.99em) {
+    .table-responsive--cards {
+        overflow: visible;
+        background: none;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .table--cards,
+    .table--cards tbody {
+        display: block;
+        background: none;
+    }
+
+    /* Les en-têtes restent lisibles par les lecteurs d'écran mais sont masqués à l'écran */
+    .table--cards thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+
+    .table--cards tbody {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+        gap: var(--space-4);
+    }
+
+    .table--cards tr {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-content: start;
+        column-gap: var(--space-3);
+        padding: var(--space-4);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-top: 4px solid var(--color-primary);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+    }
+
+    .table--cards tbody tr:hover {
+        background: var(--color-surface);
+    }
+
+    .table--cards td,
+    .table--cards td.text-end {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 8.5rem 1fr;
+        gap: var(--space-3);
+        padding: var(--space-1) 0;
+        border: 0;
+        text-align: left;
+        overflow-wrap: anywhere;
+    }
+
+    /* Les badges et liens gardent leur largeur naturelle (pas étirés dans la grille) */
+    .table--cards td > * {
+        justify-self: start;
+    }
+
+    /* Libellé de la colonne devant chaque valeur */
+    .table--cards td[data-label]::before {
+        content: attr(data-label);
+        color: var(--color-text-muted);
+        font-size: .875rem;
+        font-weight: 600;
+    }
+
+    /* Haut de carte : image (jeux) + titre */
+    .table--cards td.cell-media {
+        grid-column: 1;
+        display: block;
+        padding: 0 0 var(--space-3);
+    }
+
+    .table--cards td.cell-title {
+        display: block;
+        align-self: center;
+        padding: 0 0 var(--space-3);
+        font-size: 1.125rem;
+    }
+
+    .table--cards td.cell-media + td.cell-title {
+        grid-column: 2;
+    }
+
+    /* Bas de carte : boutons d'action */
+    .table--cards td.cell-actions {
+        display: block;
+        margin-top: var(--space-3);
+        padding-top: var(--space-3);
+        border-top: 1px solid var(--color-border);
+    }
+
+    /* Ligne « Aucun élément enregistré » */
+    .table--cards td.table__empty {
+        display: block;
+        text-align: center;
+    }
+}
+
 /* ---------- Messages flash ---------- */
 .flash {
     padding: var(--space-3) var(--space-4);

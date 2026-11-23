@@ -8,8 +8,9 @@
         <a class="btn btn--primary" href="{{ path('app_jeu_video_new') }}">Ajouter un jeu</a>
     </div>
 
-    <div class="table-responsive">
-        <table class="table">
+    {# table--cards : sur tablette / téléphone, chaque ligne s'affiche en carte (cf. components.css) #}
+    <div class="table-responsive table-responsive--cards">
+        <table class="table table--cards">
             <caption class="visually-hidden">Liste des jeux vidéo ({{ jeu_videos|length }})</caption>
             <thead>
                 <tr>
@@ -26,20 +27,20 @@
             <tbody>
             {% for jeu_video in jeu_videos %}
                 <tr>
-                    <td>
+                    <td class="cell-media">
                         {% if jeu_video.imageUrl %}
                             <img class="thumb" src="{{ asset(jeu_video.imageUrl) }}" alt="Jaquette de {{ jeu_video.titre }}">
                         {% else %}
                             <span class="thumb thumb--empty" aria-hidden="true">?</span>
                         {% endif %}
                     </td>
-                    <td><strong>{{ jeu_video.titre }}</strong></td>
-                    <td>{{ jeu_video.genre ? jeu_video.genre.nom : '' }}</td>
-                    <td>{{ jeu_video.editeur ? jeu_video.editeur.nom : '' }}</td>
-                    <td>{{ jeu_video.developpeur ? jeu_video.developpeur.nom : '' }}</td>
-                    <td>{{ jeu_video.dateSortie ? jeu_video.dateSortie|date('d/m/Y') : '' }}</td>
-                    <td class="text-end nowrap">{{ jeu_video.prix is not null ? jeu_video.prix|number_format(2, ',', ' ') ~ ' €' : '' }}</td>
-                    <td>
+                    <td class="cell-title"><strong>{{ jeu_video.titre }}</strong></td>
+                    <td data-label="Genre">{{ jeu_video.genre ? jeu_video.genre.nom : '' }}</td>
+                    <td data-label="Éditeur">{{ jeu_video.editeur ? jeu_video.editeur.nom : '' }}</td>
+                    <td data-label="Développeur">{{ jeu_video.developpeur ? jeu_video.developpeur.nom : '' }}</td>
+                    <td data-label="Date de sortie">{{ jeu_video.dateSortie ? jeu_video.dateSortie|date('d/m/Y') : '' }}</td>
+                    <td data-label="Prix" class="text-end nowrap">{{ jeu_video.prix is not null ? jeu_video.prix|number_format(2, ',', ' ') ~ ' €' : '' }}</td>
+                    <td class="cell-actions">
                         <div class="actions actions--table">
                             <a class="btn btn--secondary btn--sm" href="{{ path('app_jeu_video_show', {'id': jeu_video.id}) }}">Consulter<span class="visually-hidden"> {{ jeu_video.titre }}</span></a>
                             <a class="btn btn--secondary btn--sm" href="{{ path('app_jeu_video_edit', {'id': jeu_video.id}) }}">Modifier<span class="visually-hidden"> {{ jeu_video.titre }}</span></a>
