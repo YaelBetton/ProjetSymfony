@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le jeu {{ jeu_video.titre }}{% endblock %}
+
+{% block body %}
+    <h1>Modifier le jeu {{ jeu_video.titre }}</h1>
+
+    {{ include('jeu_video/_form.html.twig', {'button_label': 'Enregistrer les modifications'}) }}
+
+    <a href="{{ path('app_jeu_video_show', {'id': jeu_video.id}) }}">Retour au jeu</a>
+    <a href="{{ path('app_jeu_video_index') }}">Retour à la liste des jeux</a>
+
+    {{ include('jeu_video/_delete_form.html.twig') }}
+{% endblock %}

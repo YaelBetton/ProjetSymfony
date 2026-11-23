@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Racine du projet -> public/
+RewriteRule ^$ public/ [L]
+
+# Tout le reste (hors fichiers/dossiers existants) -> public/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ public/$1 [L]
