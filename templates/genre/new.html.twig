@@ -3,9 +3,13 @@
 {% block title %}Ajouter un genre{% endblock %}
 
 {% block body %}
-    <h1>Ajouter un genre</h1>
+    <div class="page-header">
+        <h1>Ajouter un genre</h1>
+    </div>
 
     {{ include('genre/_form.html.twig', {'button_label': 'Enregistrer'}) }}
 
-    <a href="{{ path('app_genre_index') }}">Retour à la liste des genres</a>
+    <div class="actions">
+        <a class="btn btn--secondary" href="{{ path('app_genre_index') }}">Retour à la liste</a>
+    </div>
 {% endblock %}

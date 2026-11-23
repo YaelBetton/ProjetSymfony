@@ -1,0 +1,47 @@
+{# Thème de formulaire de l'application (déclaré dans config/packages/twig.yaml).
+   Il étend le thème par défaut de Symfony pour :
+    - ajouter des classes CSS aux lignes de formulaire (form-row, has-error, form-row--checkbox) ;
+    - relier les messages d'aide et d'erreur au champ (aria-describedby, aria-invalid) ;
+    - donner une classe et un rôle d'alerte aux listes d'erreurs.
+   L'astérisque rouge des champs obligatoires est ajouté en CSS (label.required, cf. public/css/forms.css). #}
+{% extends 'form_div_layout.html.twig' %}
+
+{%- block form_row -%}
+    {%- set describedby = [] -%}
+    {%- if help is not empty -%}{%- set describedby = describedby|merge([id ~ '_help']) -%}{%- endif -%}
+    {%- if errors|length > 0 -%}{%- set describedby = describedby|merge([id ~ '_errors']) -%}{%- endif -%}
+
+    {%- set widget_attr = {} -%}
+    {%- if describedby is not empty -%}
+        {%- set widget_attr = {attr: attr|merge({'aria-describedby': describedby|join(' ')})} -%}
+    {%- endif -%}
+    {%- if errors|length > 0 -%}
+        {%- set widget_attr = {attr: (widget_attr.attr ?? attr)|merge({'aria-invalid': 'true'})} -%}
+    {%- endif -%}
+
+    {%- set is_checkbox = 'checkbox' in block_prefixes -%}
+    {%- set row_class = 'form-row' ~ (is_checkbox ? ' form-row--checkbox') ~ (errors|length > 0 ? ' has-error') -%}
+    {%- set row_attr = row_attr|merge({class: (row_class ~ ' ' ~ row_attr.class|default(''))|trim}) -%}
+
+    <div{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
+        {%- if is_checkbox -%}
+            {{- form_widget(form, widget_attr) -}}
+            {{- form_label(form) -}}
+        {%- else -%}
+            {{- form_label(form) -}}
+            {{- form_widget(form, widget_attr) -}}
+        {%- endif -%}
+        {{- form_help(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock form_row -%}
+
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <ul class="form-errors" id="{{ id }}_errors" role="alert">
+            {%- for error in errors -%}
+                <li>{{ error.message }}</li>
+            {%- endfor -%}
+        </ul>
+    {%- endif -%}
+{%- endblock form_errors -%}

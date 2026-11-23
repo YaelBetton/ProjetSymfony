@@ -1,31 +1,40 @@
-{{ form_start(form) }}
+{{ form_start(form, {attr: {class: 'form', novalidate: 'novalidate'}}) }}
+    {{ include('partials/_required_legend.html.twig') }}
+
     {# Erreurs globales du formulaire (ex. jeton CSRF invalide) #}
     {{ form_errors(form) }}
 
-    {{ form_row(form.titre) }}
-    {{ form_row(form.genre) }}
-    {{ form_row(form.editeur) }}
-    {{ form_row(form.developpeur) }}
-    {{ form_row(form.dateSortie) }}
+    <div class="form-grid">
+        {{ form_row(form.titre) }}
+        {{ form_row(form.genre) }}
+        {{ form_row(form.editeur) }}
+        {{ form_row(form.developpeur) }}
+        {{ form_row(form.dateSortie) }}
 
-    {# Prix : champ numérique suivi du symbole € #}
-    <div>
-        {{ form_label(form.prix) }}
-        {{ form_widget(form.prix) }} €
-        {{ form_help(form.prix) }}
-        {{ form_errors(form.prix) }}
+        {# Prix : champ numérique suivi du symbole € #}
+        <div class="form-row{{ form.prix.vars.errors|length ? ' has-error' }}">
+            {{ form_label(form.prix) }}
+            <div class="input-group">
+                {{ form_widget(form.prix, {attr: form.prix.vars.attr|merge({'aria-describedby': form.prix.vars.id ~ '_help' ~ (form.prix.vars.errors|length ? ' ' ~ form.prix.vars.id ~ '_errors')})}) }}
+                <span class="input-group__suffix" aria-hidden="true">€</span>
+            </div>
+            {{ form_help(form.prix) }}
+            {{ form_errors(form.prix) }}
+        </div>
     </div>
 
     {{ form_row(form.description) }}
 
     {# Image actuelle (en modification) #}
     {% if jeu_video.imageUrl %}
-        <p>
-            Image actuelle :<br>
-            <img src="{{ app.request.basePath }}/{{ jeu_video.imageUrl }}" alt="{{ jeu_video.titre }}" width="120">
-        </p>
+        <figure class="current-image">
+            <img src="{{ asset(jeu_video.imageUrl) }}" alt="Image actuelle de {{ jeu_video.titre }}">
+            <figcaption>Image actuelle (choisissez un fichier ci-dessous pour la remplacer)</figcaption>
+        </figure>
     {% endif %}
     {{ form_row(form.image) }}
 
-    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    <div class="form-actions">
+        <button type="submit" class="btn btn--primary">{{ button_label|default('Enregistrer') }}</button>
+    </div>
 {{ form_end(form) }}

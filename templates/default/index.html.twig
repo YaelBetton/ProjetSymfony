@@ -1,6 +1,37 @@
 {% extends 'base.html.twig' %}
-{% block title %} <h1>Nomapp</h1> {% endblock %}
-{% block body %} <h1>Yael Betton G8</h1>
-                <p>blabla</p>
-{% endblock %}
 
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <section class="hero">
+        <h1>Bienvenue sur le Catalogue Jeux Vidéo</h1>
+        <p>Consultez et gérez les jeux vidéo, leurs genres et leurs éditeurs.</p>
+    </section>
+
+    <ul class="card-grid">
+        <li class="card">
+            <h2 class="card__title">Jeux vidéo</h2>
+            <p class="card__count"><strong>{{ nb_jeux }}</strong> jeu{{ nb_jeux > 1 ? 'x' : '' }} enregistré{{ nb_jeux > 1 ? 's' : '' }}</p>
+            <div class="card__actions">
+                <a class="btn btn--secondary" href="{{ path('app_jeu_video_index') }}">Consulter les jeux</a>
+                <a class="btn btn--primary" href="{{ path('app_jeu_video_new') }}">Ajouter un jeu</a>
+            </div>
+        </li>
+        <li class="card">
+            <h2 class="card__title">Genres</h2>
+            <p class="card__count"><strong>{{ nb_genres }}</strong> genre{{ nb_genres > 1 ? 's' : '' }} enregistré{{ nb_genres > 1 ? 's' : '' }}</p>
+            <div class="card__actions">
+                <a class="btn btn--secondary" href="{{ path('app_genre_index') }}">Consulter les genres</a>
+                <a class="btn btn--primary" href="{{ path('app_genre_new') }}">Ajouter un genre</a>
+            </div>
+        </li>
+        <li class="card">
+            <h2 class="card__title">Éditeurs</h2>
+            <p class="card__count"><strong>{{ nb_editeurs }}</strong> éditeur{{ nb_editeurs > 1 ? 's' : '' }} enregistré{{ nb_editeurs > 1 ? 's' : '' }}</p>
+            <div class="card__actions">
+                <a class="btn btn--secondary" href="{{ path('app_editeur_index') }}">Consulter les éditeurs</a>
+                <a class="btn btn--primary" href="{{ path('app_editeur_new') }}">Ajouter un éditeur</a>
+            </div>
+        </li>
+    </ul>
+{% endblock %}

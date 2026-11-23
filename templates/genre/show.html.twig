@@ -3,45 +3,43 @@
 {% block title %}Genre {{ genre.nom }}{% endblock %}
 
 {% block body %}
-    <h1>Genre {{ genre.nom }}</h1>
+    <div class="page-header">
+        <h1>Genre {{ genre.nom }}</h1>
+    </div>
 
-    {{ include('_flash_messages.html.twig') }}
-
-    <table class="table">
+    <table class="table table--detail">
+        <caption class="visually-hidden">Détail du genre {{ genre.nom }}</caption>
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ genre.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
+                <th scope="row">Nom</th>
                 <td>{{ genre.nom }}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th scope="row">Description</th>
                 <td>{{ genre.description|nl2br }}</td>
             </tr>
             <tr>
-                <th>Actif</th>
-                <td>{{ genre.actif ? 'Oui' : 'Non' }}</td>
+                <th scope="row">Statut</th>
+                <td>{{ include('genre/_statut.html.twig') }}</td>
             </tr>
             <tr>
-                <th>Nombre de jeux</th>
+                <th scope="row">Nombre de jeux</th>
                 <td>{{ genre.jeuVideos|length }}</td>
             </tr>
             <tr>
-                <th>Date de création</th>
+                <th scope="row">Date de création</th>
                 <td>{{ genre.createdAt ? genre.createdAt|date('d/m/Y H:i') : '' }}</td>
             </tr>
             <tr>
-                <th>Date de modification</th>
+                <th scope="row">Date de modification</th>
                 <td>{{ genre.updatedAt ? genre.updatedAt|date('d/m/Y H:i') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_genre_index') }}">Retour à la liste des genres</a>
-    <a href="{{ path('app_genre_edit', {'id': genre.id}) }}">Modifier ce genre</a>
-
-    {{ include('genre/_delete_form.html.twig') }}
+    <div class="actions">
+        <a class="btn btn--secondary" href="{{ path('app_genre_index') }}">Retour à la liste</a>
+        <a class="btn btn--primary" href="{{ path('app_genre_edit', {'id': genre.id}) }}">Modifier ce genre</a>
+        {{ include('genre/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

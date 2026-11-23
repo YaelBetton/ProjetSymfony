@@ -1,11 +1,17 @@
-{{ form_start(form) }}
+{{ form_start(form, {attr: {class: 'form', novalidate: 'novalidate'}}) }}
+    {{ include('partials/_required_legend.html.twig') }}
+
     {# Erreurs globales du formulaire (ex. jeton CSRF invalide) #}
     {{ form_errors(form) }}
 
-    {{ form_row(form.nom) }}
-    {{ form_row(form.pays) }}
+    <div class="form-grid">
+        {{ form_row(form.nom) }}
+        {{ form_row(form.pays) }}
+    </div>
     {{ form_row(form.siteWeb) }}
     {{ form_row(form.description) }}
 
-    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    <div class="form-actions">
+        <button type="submit" class="btn btn--primary">{{ button_label|default('Enregistrer') }}</button>
+    </div>
 {{ form_end(form) }}

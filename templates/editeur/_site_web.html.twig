@@ -1,8 +1,8 @@
-{# Lien vers le site internet de l'éditeur (ouvert dans un nouvel onglet).
+{# Lien vers le site internet de l'éditeur (ouvert dans un nouvel onglet, signalé aux lecteurs d'écran).
    Seules les adresses http(s) deviennent des liens, pour éviter un lien « javascript: » malveillant. #}
 {% if editeur.siteWeb %}
     {% if editeur.siteWeb starts with 'http://' or editeur.siteWeb starts with 'https://' %}
-        <a href="{{ editeur.siteWeb }}" target="_blank" rel="noopener noreferrer">{{ editeur.siteWeb }}</a>
+        <a class="link-external" href="{{ editeur.siteWeb }}" target="_blank" rel="noopener noreferrer">{{ editeur.siteWeb|replace({'https://': '', 'http://': ''}) }}<span class="visually-hidden"> (nouvel onglet)</span></a>
     {% else %}
         {{ editeur.siteWeb }}
     {% endif %}

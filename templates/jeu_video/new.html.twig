@@ -3,9 +3,13 @@
 {% block title %}Ajouter un jeu vidéo{% endblock %}
 
 {% block body %}
-    <h1>Ajouter un jeu vidéo</h1>
+    <div class="page-header">
+        <h1>Ajouter un jeu vidéo</h1>
+    </div>
 
     {{ include('jeu_video/_form.html.twig', {'button_label': 'Enregistrer'}) }}
 
-    <a href="{{ path('app_jeu_video_index') }}">Retour à la liste des jeux</a>
+    <div class="actions">
+        <a class="btn btn--secondary" href="{{ path('app_jeu_video_index') }}">Retour à la liste</a>
+    </div>
 {% endblock %}

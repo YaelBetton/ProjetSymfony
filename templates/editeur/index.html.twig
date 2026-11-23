@@ -3,48 +3,50 @@
 {% block title %}Liste des éditeurs{% endblock %}
 
 {% block body %}
-    <h1>Liste des éditeurs</h1>
+    <div class="page-header">
+        <h1>Liste des éditeurs</h1>
+        <a class="btn btn--primary" href="{{ path('app_editeur_new') }}">Ajouter un éditeur</a>
+    </div>
 
-    {{ include('_flash_messages.html.twig') }}
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Pays</th>
-                <th>Site internet</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for editeur in editeurs %}
-            <tr>
-                <td>{{ editeur.id }}</td>
-                <td>{{ editeur.nom }}</td>
-                <td>{{ editeur.pays }}</td>
-                <td>{{ include('editeur/_site_web.html.twig') }}</td>
-                {# Seuls les 150 premiers caractères de la description sont affichés #}
-                <td>
-                    {% if editeur.description|length > 150 %}
-                        {{ editeur.description|slice(0, 150) }}…
-                    {% else %}
-                        {{ editeur.description }}
-                    {% endif %}
-                </td>
-                <td>
-                    <a href="{{ path('app_editeur_show', {'id': editeur.id}) }}">Consulter</a>
-                    <a href="{{ path('app_editeur_edit', {'id': editeur.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">Aucun éditeur enregistré.</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_editeur_new') }}">Ajouter un éditeur</a>
+    <div class="table-responsive">
+        <table class="table">
+            <caption class="visually-hidden">Liste des éditeurs ({{ editeurs|length }})</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Pays</th>
+                    <th scope="col">Site internet</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for editeur in editeurs %}
+                <tr>
+                    <td><strong>{{ editeur.nom }}</strong></td>
+                    <td>{{ editeur.pays }}</td>
+                    <td>{{ include('editeur/_site_web.html.twig') }}</td>
+                    {# Seuls les 150 premiers caractères de la description sont affichés #}
+                    <td>
+                        {% if editeur.description|length > 150 %}
+                            {{ editeur.description|slice(0, 150) }}…
+                        {% else %}
+                            {{ editeur.description }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="actions actions--table">
+                            <a class="btn btn--secondary btn--sm" href="{{ path('app_editeur_show', {'id': editeur.id}) }}">Consulter<span class="visually-hidden"> {{ editeur.nom }}</span></a>
+                            <a class="btn btn--secondary btn--sm" href="{{ path('app_editeur_edit', {'id': editeur.id}) }}">Modifier<span class="visually-hidden"> {{ editeur.nom }}</span></a>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5" class="table__empty">Aucun éditeur enregistré.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

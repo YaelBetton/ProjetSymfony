@@ -1,0 +1,177 @@
+/* ==========================================================================
+   forms.css — Formulaires : champs, libellés, astérisque des champs
+   obligatoires, aide, erreurs (structure produite par templates/form/theme.html.twig)
+   ========================================================================== */
+
+.form {
+    max-width: 48rem;
+    padding: var(--space-6);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.form-legend {
+    font-size: .875rem;
+    color: var(--color-text-muted);
+}
+
+/* Deux colonnes sur grand écran, une seule sur téléphone */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 0 var(--space-6);
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin-bottom: var(--space-4);
+}
+
+.form-row label,
+.form .form-row > label {
+    font-weight: 600;
+}
+
+/* Astérisque rouge pour les champs obligatoires (Symfony ajoute la classe « required » au label) */
+.form label.required::after,
+.required-mark {
+    color: var(--color-danger);
+    font-weight: 700;
+}
+
+.form label.required::after {
+    content: " *";
+}
+
+/* Champs : un seul style pour tous */
+.form input[type="text"],
+.form input[type="number"],
+.form input[type="date"],
+.form input[type="url"],
+.form input[type="email"],
+.form input[type="file"],
+.form select,
+.form textarea {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid #6b7280;      /* contraste de bordure ≥ 3:1 */
+    border-radius: var(--radius);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font: inherit;
+}
+
+.form textarea {
+    resize: vertical;
+}
+
+.form input:focus-visible,
+.form select:focus-visible,
+.form textarea:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 1px;
+    border-color: var(--color-primary);
+}
+
+/* Case à cocher : case puis libellé, sur une ligne */
+.form-row--checkbox {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+}
+
+.form-row--checkbox input[type="checkbox"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin: 0;
+    accent-color: var(--color-primary);
+}
+
+.form-row--checkbox .help-text {
+    flex-basis: 100%;
+}
+
+/* Champ avec suffixe (prix en €) */
+.input-group {
+    display: flex;
+}
+
+.input-group input {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.input-group__suffix {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--space-3);
+    border: 1px solid #6b7280;
+    border-left: 0;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    background-color: #f3f4f6;
+    font-weight: 600;
+}
+
+/* Texte d'aide */
+.help-text {
+    font-size: .875rem;
+    color: var(--color-text-muted);
+}
+
+/* Erreurs */
+.form-errors {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--color-danger);
+    font-size: .9375rem;
+    font-weight: 600;
+}
+
+.form-errors li::before {
+    content: "⚠ ";
+}
+
+.form > .form-errors {
+    padding: var(--space-3) var(--space-4);
+    margin-bottom: var(--space-4);
+    background-color: var(--color-danger-soft);
+    border-radius: var(--radius);
+}
+
+.form .has-error input,
+.form .has-error select,
+.form .has-error textarea,
+.form .has-error .input-group__suffix {
+    border-color: var(--color-danger);
+    border-width: 2px;
+}
+
+/* Image actuelle d'un jeu (formulaire de modification) */
+.current-image {
+    margin: 0 0 var(--space-4);
+}
+
+.current-image img {
+    max-width: 10rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.current-image figcaption {
+    font-size: .875rem;
+    color: var(--color-text-muted);
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+}

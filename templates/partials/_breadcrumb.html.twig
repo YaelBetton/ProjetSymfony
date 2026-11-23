@@ -1,0 +1,18 @@
+{# Fil d'Ariane construit à partir du menu KnpMenu « main » (cf. src/Menu/MenuBuilder.php).
+   Non affiché sur la page d'accueil. #}
+{% set current_item = knp_menu_get_current_item('main') %}
+{% if current_item and app.current_route != 'index' %}
+    <nav class="breadcrumb" aria-label="Fil d'Ariane">
+        <ol>
+            {% for crumb in knp_menu_get_breadcrumbs_array(current_item) %}
+                <li>
+                    {% if loop.last %}
+                        <span aria-current="page">{{ crumb.label }}</span>
+                    {% else %}
+                        <a href="{{ crumb.uri }}">{{ crumb.label }}</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ol>
+    </nav>
+{% endif %}

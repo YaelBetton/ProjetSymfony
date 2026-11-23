@@ -1,0 +1,6 @@
+{# Badge Actif / Inactif d'un genre (texte explicite : l'information ne repose pas que sur la couleur) #}
+{% if genre.actif %}
+    <span class="badge badge--success">Actif</span>
+{% else %}
+    <span class="badge badge--muted">Inactif</span>
+{% endif %}

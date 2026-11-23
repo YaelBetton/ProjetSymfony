@@ -1,0 +1,8 @@
+{% extends 'knp_menu.html.twig' %}
+
+{# Ajoute aria-current sur le lien de la page courante (accessibilité) :
+   « page » pour l'item courant, « true » pour la section contenant la page courante. #}
+{% block linkElement %}
+    {%- set aria_current = matcher.isCurrent(item) ? 'page' : (matcher.isAncestor(item, options.matchingDepth) ? 'true' : null) -%}
+    <a href="{{ item.uri }}"{{ _self.attributes(item.linkAttributes) }}{% if aria_current %} aria-current="{{ aria_current }}"{% endif %}>{{ block('label') }}</a>
+{% endblock %}
