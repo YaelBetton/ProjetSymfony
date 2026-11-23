@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Editeur{% endblock %}
+{% block title %}Modifier l'éditeur {{ editeur.nom }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Editeur</h1>
+    <h1>Modifier l'éditeur {{ editeur.nom }}</h1>
 
-    {{ include('editeur/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('editeur/_form.html.twig', {'button_label': 'Enregistrer les modifications'}) }}
 
-    <a href="{{ path('app_editeur_index') }}">back to list</a>
+    <a href="{{ path('app_editeur_show', {'id': editeur.id}) }}">Retour à l'éditeur</a>
+    <a href="{{ path('app_editeur_index') }}">Retour à la liste des éditeurs</a>
 
     {{ include('editeur/_delete_form.html.twig') }}
 {% endblock %}

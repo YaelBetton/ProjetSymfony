@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Editeur{% endblock %}
+{% block title %}Éditeur {{ editeur.nom }}{% endblock %}
 
 {% block body %}
-    <h1>Editeur</h1>
+    <h1>Éditeur {{ editeur.nom }}</h1>
+
+    {{ include('_flash_messages.html.twig') }}
 
     <table class="table">
         <tbody>
@@ -20,27 +22,31 @@
                 <td>{{ editeur.pays }}</td>
             </tr>
             <tr>
-                <th>SiteWeb</th>
-                <td>{{ editeur.siteWeb }}</td>
+                <th>Site internet</th>
+                <td>{{ include('editeur/_site_web.html.twig') }}</td>
             </tr>
             <tr>
                 <th>Description</th>
-                <td>{{ editeur.description }}</td>
+                {# Description affichée en entier (contrairement à la liste) #}
+                <td>{{ editeur.description|nl2br }}</td>
             </tr>
             <tr>
-                <th>CreatedAt</th>
-                <td>{{ editeur.createdAt ? editeur.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <th>Nombre de jeux</th>
+                <td>{{ editeur.jeuVideos|length }}</td>
             </tr>
             <tr>
-                <th>UpdatedAt</th>
-                <td>{{ editeur.updatedAt ? editeur.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <th>Date de création</th>
+                <td>{{ editeur.createdAt ? editeur.createdAt|date('d/m/Y H:i') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date de modification</th>
+                <td>{{ editeur.updatedAt ? editeur.updatedAt|date('d/m/Y H:i') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_editeur_index') }}">back to list</a>
-
-    <a href="{{ path('app_editeur_edit', {'id': editeur.id}) }}">edit</a>
+    <a href="{{ path('app_editeur_index') }}">Retour à la liste des éditeurs</a>
+    <a href="{{ path('app_editeur_edit', {'id': editeur.id}) }}">Modifier cet éditeur</a>
 
     {{ include('editeur/_delete_form.html.twig') }}
 {% endblock %}

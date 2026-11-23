@@ -1,0 +1,9 @@
+{# Lien vers le site internet de l'éditeur (ouvert dans un nouvel onglet).
+   Seules les adresses http(s) deviennent des liens, pour éviter un lien « javascript: » malveillant. #}
+{% if editeur.siteWeb %}
+    {% if editeur.siteWeb starts with 'http://' or editeur.siteWeb starts with 'https://' %}
+        <a href="{{ editeur.siteWeb }}" target="_blank" rel="noopener noreferrer">{{ editeur.siteWeb }}</a>
+    {% else %}
+        {{ editeur.siteWeb }}
+    {% endif %}
+{% endif %}

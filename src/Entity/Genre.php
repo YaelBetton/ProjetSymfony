@@ -53,9 +53,12 @@ class Genre
         return $this->nom;
     }
 
+    /**
+     * Le nom d'un genre est toujours enregistré en majuscules (ex. « rpg » → « RPG »).
+     */
     public function setNom(string $nom): static
     {
-        $this->nom = $nom;
+        $this->nom = mb_strtoupper(trim($nom), 'UTF-8');
 
         return $this;
     }

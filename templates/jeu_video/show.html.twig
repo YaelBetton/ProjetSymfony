@@ -5,9 +5,7 @@
 {% block body %}
     <h1>Jeu vidéo {{ jeu_video.titre }}</h1>
 
-    {% for message in app.flashes('success') %}
-        <p class="flash flash-success">{{ message }}</p>
-    {% endfor %}
+    {{ include('_flash_messages.html.twig') }}
 
     {% if jeu_video.imageUrl %}
         <img src="{{ app.request.basePath }}/{{ jeu_video.imageUrl }}" alt="{{ jeu_video.titre }}" width="250">
