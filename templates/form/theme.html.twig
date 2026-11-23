@@ -36,12 +36,37 @@
     </div>
 {%- endblock form_row -%}
 
+{# Liste des erreurs d'un champ, référencée par aria-describedby.
+   (Pas de role="alert" : interdit sur <ul> par la norme HTML/ARIA.) #}
 {%- block form_errors -%}
     {%- if errors|length > 0 -%}
-        <ul class="form-errors" id="{{ id }}_errors" role="alert">
+        <ul class="form-errors" id="{{ id }}_errors">
             {%- for error in errors -%}
                 <li>{{ error.message }}</li>
             {%- endfor -%}
         </ul>
     {%- endif -%}
 {%- endblock form_errors -%}
+
+{# Champs simples et cases à cocher sans « / » final (syntaxe HTML5, aucun avertissement W3C) #}
+{%- block form_widget_simple -%}
+    {%- set type = type|default('text') -%}
+    {%- if type == 'range' or type == 'color' -%}
+        {%- set required = false -%}
+    {%- endif -%}
+    <input type="{{ type }}" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}"{% endif %}>
+{%- endblock form_widget_simple -%}
+
+{%- block checkbox_widget -%}
+    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked{% endif %}>
+{%- endblock checkbox_widget -%}
+
+{# Champ numérique : une saisie non numérique n'est pas réinjectée dans <input type="number">
+   (valeur invalide pour le W3C) ; le message d'erreur reste affiché sous le champ. #}
+{%- block number_widget -%}
+    {%- set type = type|default('text') -%}
+    {%- if type == 'number' and value is not empty and not (value matches '/^-?\\d+(\\.\\d+)?$/') -%}
+        {%- set value = '' -%}
+    {%- endif -%}
+    {{ block('form_widget_simple') }}
+{%- endblock number_widget -%}

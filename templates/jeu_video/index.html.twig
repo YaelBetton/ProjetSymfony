@@ -37,7 +37,7 @@
                         {% if jeu_video.imageUrl %}
                             <img class="thumb" src="{{ asset(jeu_video.imageUrl) }}" alt="Jaquette de {{ jeu_video.titre }}">
                         {% else %}
-                            <span class="thumb thumb--empty" aria-hidden="true">?</span>
+                            <span class="thumb thumb--empty">Aucune image</span>
                         {% endif %}
                     </td>
                     <td class="cell-title"><strong>{{ jeu_video.titre }}</strong></td>

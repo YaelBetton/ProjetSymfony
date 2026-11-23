@@ -71,6 +71,7 @@ class JeuVideoType extends AbstractType
                 'label' => 'Date de sortie',
                 'widget' => 'single_text', // <input type="date"> : calendrier natif du navigateur
                 'required' => false,
+                'help' => 'Saisissez la date (JJ/MM/AAAA) ou choisissez-la dans le calendrier.',
             ])
             ->add('prix', NumberType::class, [
                 'label' => 'Prix',

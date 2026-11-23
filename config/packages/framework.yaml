@@ -8,6 +8,12 @@ framework:
     #esi: true
     #fragments: true
 
+    # Version ajoutée aux URL générées par asset() (ex. css/base.css?v=1.1) :
+    # l'incrémenter après une modification du CSS / JS force les navigateurs à recharger les fichiers.
+    assets:
+        version: '1.2'
+        version_format: '%%s?v=%%s'
+
 when@test:
     framework:
         test: true
