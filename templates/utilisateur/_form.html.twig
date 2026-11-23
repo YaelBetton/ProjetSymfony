@@ -1,0 +1,27 @@
+{{ form_start(form, {attr: {class: 'form', novalidate: 'novalidate'}}) }}
+    {{ include('partials/_required_legend.html.twig') }}
+
+    {# Erreurs globales du formulaire (ex. jeton CSRF invalide) #}
+    {{ form_errors(form) }}
+
+    <div class="form-grid">
+        {{ form_row(form.prenom) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.pseudonyme) }}
+        {{ form_row(form.mail) }}
+        {{ form_row(form.dateNaissance) }}
+    </div>
+
+    {# Image de profil actuelle (en modification) #}
+    {% if utilisateur.imageProfil %}
+        <figure class="current-image">
+            <img src="{{ asset(utilisateur.imageProfil) }}" alt="Image de profil actuelle de {{ utilisateur.pseudonyme }}">
+            <figcaption>Image actuelle (choisissez un fichier ci-dessous pour la remplacer)</figcaption>
+        </figure>
+    {% endif %}
+    {{ form_row(form.imageProfil) }}
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn--primary">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+{{ form_end(form) }}

@@ -2,6 +2,11 @@
 
 {% block title %}Liste des jeux vidéo{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/collection.css') }}">
+{% endblock %}
+
 {% block body %}
     <div class="page-header">
         <h1>Liste des jeux vidéo</h1>
@@ -10,17 +15,18 @@
 
     {# table--cards : sur tablette / téléphone, chaque ligne s'affiche en carte (cf. components.css) #}
     <div class="table-responsive table-responsive--cards">
-        <table class="table table--cards">
+        <table class="table table--cards table--serree">
             <caption class="visually-hidden">Liste des jeux vidéo ({{ jeu_videos|length }})</caption>
             <thead>
                 <tr>
-                    <th scope="col">Image</th>
+                    <th scope="col" class="cell-media">Image</th>
                     <th scope="col">Titre</th>
                     <th scope="col">Genre</th>
                     <th scope="col">Éditeur</th>
                     <th scope="col">Développeur</th>
                     <th scope="col">Date de sortie</th>
                     <th scope="col" class="text-end">Prix</th>
+                    <th scope="col"><abbr title="Dans la collection de">Collections</abbr></th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -40,6 +46,18 @@
                     <td data-label="Développeur">{{ jeu_video.developpeur ? jeu_video.developpeur.nom : '' }}</td>
                     <td data-label="Date de sortie">{{ jeu_video.dateSortie ? jeu_video.dateSortie|date('d/m/Y') : '' }}</td>
                     <td data-label="Prix" class="text-end nowrap">{{ jeu_video.prix is not null ? jeu_video.prix|number_format(2, ',', ' ') ~ ' €' : '' }}</td>
+                    {# TP6 : utilisateurs ayant ce jeu dans leur collection (lien vers leur collection) #}
+                    <td data-label="Dans la collection de">
+                        {% if jeu_video.collects is not empty %}
+                            <ul class="possesseurs">
+                                {% for collect in jeu_video.collects %}
+                                    <li><a href="{{ path('app_collect_show', {'id': collect.id}) }}" title="{{ collect.utilisateur.nomComplet }} — {{ collect.statut.label }}">{{ collect.utilisateur.pseudonyme }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <span class="texte-vide">Personne</span>
+                        {% endif %}
+                    </td>
                     <td class="cell-actions">
                         <div class="actions actions--table">
                             <a class="btn btn--secondary btn--sm" href="{{ path('app_jeu_video_show', {'id': jeu_video.id}) }}">Consulter<span class="visually-hidden"> {{ jeu_video.titre }}</span></a>
@@ -49,7 +67,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="8" class="table__empty">Aucun jeu vidéo enregistré.</td>
+                    <td colspan="9" class="table__empty">Aucun jeu vidéo enregistré.</td>
                 </tr>
             {% endfor %}
             </tbody>

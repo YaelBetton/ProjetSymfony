@@ -1,0 +1,30 @@
+{{ form_start(form, {attr: {class: 'form', novalidate: 'novalidate'}}) }}
+    {{ include('partials/_required_legend.html.twig') }}
+
+    {# Erreurs globales du formulaire (ex. jeton CSRF invalide) #}
+    {{ form_errors(form) }}
+
+    <div class="form-grid">
+        {{ form_row(form.jeuVideo) }}
+        {{ form_row(form.statut) }}
+
+        {# Prix d'achat : champ numérique suivi du symbole € #}
+        <div class="form-row{{ form.prixAchat.vars.errors|length ? ' has-error' }}">
+            {{ form_label(form.prixAchat) }}
+            <div class="input-group">
+                {{ form_widget(form.prixAchat, {attr: form.prixAchat.vars.attr|merge({'aria-describedby': form.prixAchat.vars.id ~ '_help' ~ (form.prixAchat.vars.errors|length ? ' ' ~ form.prixAchat.vars.id ~ '_errors')})}) }}
+                <span class="input-group__suffix" aria-hidden="true">€</span>
+            </div>
+            {{ form_help(form.prixAchat) }}
+            {{ form_errors(form.prixAchat) }}
+        </div>
+
+        {{ form_row(form.dateAchat) }}
+    </div>
+
+    {{ form_row(form.commentaire) }}
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn--primary">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+{{ form_end(form) }}

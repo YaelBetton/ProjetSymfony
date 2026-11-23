@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\JeuVideoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -48,9 +50,44 @@ class JeuVideo
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    /**
+     * Présence du jeu dans les collections des utilisateurs (TP6).
+     * Supprimer le jeu supprime aussi ces lignes (ON DELETE CASCADE sur collect.jeu_video_id).
+     *
+     * @var Collection<int, Collect>
+     */
+    #[ORM\OneToMany(targetEntity: Collect::class, mappedBy: 'jeuVideo')]
+    private Collection $collects;
+
     public function __construct()
     {
+        $this->collects = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
+    }
+
+    /**
+     * @return Collection<int, Collect>
+     */
+    public function getCollects(): Collection
+    {
+        return $this->collects;
+    }
+
+    public function addCollect(Collect $collect): static
+    {
+        if (!$this->collects->contains($collect)) {
+            $this->collects->add($collect);
+            $collect->setJeuVideo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCollect(Collect $collect): static
+    {
+        $this->collects->removeElement($collect);
+
+        return $this;
     }
 
     public function getId(): ?int

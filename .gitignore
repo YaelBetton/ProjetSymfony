@@ -11,3 +11,5 @@
 
 /public/uploads/jeux/*
 !/public/uploads/jeux/.gitkeep
+/public/uploads/utilisateurs/*
+!/public/uploads/utilisateurs/.gitkeep

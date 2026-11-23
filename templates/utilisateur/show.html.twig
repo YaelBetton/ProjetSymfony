@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Collection de {{ utilisateur.pseudonyme }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/collection.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="profil">
+        {{ include('utilisateur/_avatar.html.twig', {taille: 'lg'}) }}
+        <div>
+            <h1>Collection de {{ utilisateur.pseudonyme }}</h1>
+            <p class="profil__sous-titre">
+                {{ utilisateur.nomComplet }} —
+                {{ collects|length }} jeu{{ collects|length > 1 ? 'x' : '' }} dans sa collection
+            </p>
+        </div>
+    </div>
+
+    <table class="table table--detail">
+        <caption class="visually-hidden">Profil de {{ utilisateur.pseudonyme }}</caption>
+        <tbody>
+            <tr>
+                <th scope="row">Prénom</th>
+                <td>{{ utilisateur.prenom }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Nom</th>
+                <td>{{ utilisateur.nom }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Pseudo</th>
+                <td>{{ utilisateur.pseudonyme }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Adresse mail</th>
+                <td><a href="mailto:{{ utilisateur.mail }}">{{ utilisateur.mail }}</a></td>
+            </tr>
+            <tr>
+                <th scope="row">Date de naissance</th>
+                <td>
+                    {% if utilisateur.dateNaissance %}
+                        {{ utilisateur.dateNaissance|date('d/m/Y') }}
+                        ({{ date(utilisateur.dateNaissance).diff(date('now')).y }} ans)
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Valeur de la collection</th>
+                <td>{{ utilisateur.totalPrixAchat|number_format(2, ',', ' ') }} €</td>
+            </tr>
+            <tr>
+                <th scope="row">Date de création</th>
+                <td>{{ utilisateur.createdAt ? utilisateur.createdAt|date('d/m/Y H:i') : '' }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Date de modification</th>
+                <td>{{ utilisateur.updatedAt ? utilisateur.updatedAt|date('d/m/Y H:i') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <section class="section" aria-labelledby="titre-collection">
+        <div class="section__header">
+            <h2 id="titre-collection">Jeux de la collection</h2>
+            <a class="btn btn--primary" href="{{ path('app_collect_new', {'utilisateur': utilisateur.id}) }}">Ajouter un jeu à la collection</a>
+        </div>
+
+        {% if par_statut is not empty %}
+            <ul class="stats-statuts" aria-label="Nombre de jeux par statut">
+                {% for ligne in par_statut %}
+                    <li><span class="badge {{ ligne.statut.badgeClass }}">{{ ligne.statut.label }} : {{ ligne.nb }}</span></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div class="table-responsive table-responsive--cards">
+            <table class="table table--cards">
+                <caption class="visually-hidden">Jeux de la collection de {{ utilisateur.pseudonyme }} ({{ collects|length }})</caption>
+                <thead>
+                    <tr>
+                        <th scope="col" class="cell-media">Image</th>
+                        <th scope="col">Jeu</th>
+                        <th scope="col">Statut</th>
+                        <th scope="col" class="text-end">Prix d'achat</th>
+                        <th scope="col">Date d'achat</th>
+                        <th scope="col">Statut modifié le</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for collect in collects %}
+                    {% set jeu = collect.jeuVideo %}
+                    <tr>
+                        <td class="cell-media">
+                            {% if jeu.imageUrl %}
+                                <img class="thumb" src="{{ asset(jeu.imageUrl) }}" alt="Jaquette de {{ jeu.titre }}">
+                            {% else %}
+                                <span class="thumb thumb--empty" aria-hidden="true">?</span>
+                            {% endif %}
+                        </td>
+                        <td class="cell-title"><a href="{{ path('app_jeu_video_show', {'id': jeu.id}) }}"><strong>{{ jeu.titre }}</strong></a></td>
+                        <td data-label="Statut">{{ include('collect/_statut.html.twig', {statut: collect.statut}) }}</td>
+                        <td data-label="Prix d'achat" class="text-end nowrap">{{ collect.prixAchat is not null ? collect.prixAchat|number_format(2, ',', ' ') ~ ' €' : '' }}</td>
+                        <td data-label="Date d'achat">{{ collect.dateAchat ? collect.dateAchat|date('d/m/Y') : '' }}</td>
+                        <td data-label="Statut modifié le">{{ collect.dateModifStatut ? collect.dateModifStatut|date('d/m/Y') : '' }}</td>
+                        <td class="cell-actions">
+                            <div class="actions actions--table">
+                                <a class="btn btn--secondary btn--sm" href="{{ path('app_collect_show', {'id': collect.id}) }}">Consulter<span class="visually-hidden"> {{ jeu.titre }}</span></a>
+                                <a class="btn btn--secondary btn--sm" href="{{ path('app_collect_edit', {'id': collect.id}) }}">Modifier<span class="visually-hidden"> {{ jeu.titre }}</span></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="table__empty">Aucun jeu dans la collection de {{ utilisateur.pseudonyme }} pour le moment.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div class="actions">
+        <a class="btn btn--secondary" href="{{ path('app_utilisateur_index') }}">Retour à la liste</a>
+        <a class="btn btn--primary" href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">Modifier cet utilisateur</a>
+        {{ include('utilisateur/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

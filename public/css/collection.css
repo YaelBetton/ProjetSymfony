@@ -1,0 +1,148 @@
+/* ==========================================================================
+   collection.css — Écrans du TP6 (utilisateurs et collections de jeux vidéo)
+   Chargé uniquement par les pages qui en ont besoin ({% block stylesheets %}).
+   Réutilise les variables de base.css pour rester dans la DA du site.
+   ========================================================================== */
+
+/* ---------- Badges de statut (StatutJeuEnum) ----------
+   Couleurs douces + texte foncé : contraste ≥ 4,5:1 (WCAG AA). */
+.badge--statut-possede   { background-color: var(--color-primary-soft); color: var(--color-primary-hover); }
+.badge--statut-souhaite  { background-color: #fdf2f8; color: #9d174d; }
+.badge--statut-en-cours  { background-color: #fffbeb; color: #92400e; }
+.badge--statut-termine   { background-color: var(--color-success-soft); color: #065f46; }
+.badge--statut-abandonne { background-color: #f3f4f6; color: var(--color-text-muted); }
+.badge--statut-prete     { background-color: #ecfeff; color: #155e75; }
+.badge--statut-vendu     { background-color: var(--color-danger-soft); color: var(--color-danger-hover); }
+.badge--statut-platine   { background-color: var(--color-header); color: var(--color-accent); }
+
+/* ---------- Avatar (image de profil ou initiales) ---------- */
+.avatar {
+    display: block;
+    flex: none;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatar--initiales {
+    display: grid;
+    place-items: center;
+    background-color: var(--color-primary);
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: .03em;
+}
+
+.avatar--lg {
+    width: 6rem;
+    height: 6rem;
+    font-size: 1.75rem;
+    box-shadow: var(--shadow);
+}
+
+/* ---------- En-tête de profil (page d'une collection) ---------- */
+.profil {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4) var(--space-6);
+    margin-bottom: var(--space-6);
+}
+
+.profil h1 {
+    margin: 0;
+}
+
+.profil__sous-titre {
+    margin: var(--space-1) 0 0;
+    color: var(--color-text-muted);
+}
+
+/* Nom affiché sous le pseudo dans la liste */
+.sous-texte {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: .875rem;
+    font-weight: 400;
+}
+
+/* ---------- Section collection ---------- */
+.section {
+    margin-top: var(--space-8);
+}
+
+.section__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+.section__header h2 {
+    margin: 0;
+}
+
+/* Résumé de la collection : nombre de jeux par statut */
+.stats-statuts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-4);
+    padding: 0;
+    list-style: none;
+}
+
+.stats-statuts .badge {
+    font-size: .875rem;
+    padding: var(--space-1) var(--space-3);
+}
+
+/* ---------- Liste des possesseurs (liste des jeux, TP6 1.4) ---------- */
+.possesseurs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.possesseurs a {
+    display: inline-block;
+    padding: .125rem var(--space-2);
+    border-radius: 999px;
+    background-color: var(--color-primary-soft);
+    color: var(--color-primary);
+    font-size: .8125rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.possesseurs a:hover {
+    background-color: var(--color-primary);
+    color: #fff;
+}
+
+.texte-vide {
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+/* Liste des jeux (9 colonnes depuis le TP6) : espacement horizontal un peu réduit en mode tableau */
+@media (min-width: 64em) {
+    .table--serree th,
+    .table--serree td {
+        padding-inline: var(--space-3);
+    }
+}
+
+/* PC portable (1024 → 1200 px) : on masque la vignette pour que les listes
+   (jeux avec la colonne « Collections », collection d'un utilisateur) tiennent sans défilement. */
+@media (min-width: 64em) and (max-width: 74.99em) {
+    .table--cards .cell-media {
+        display: none;
+    }
+}

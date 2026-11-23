@@ -42,13 +42,13 @@ final class JeuVideoController extends AbstractController
     }
 
     /**
-     * READ — Liste de tous les jeux vidéo.
+     * READ — Liste de tous les jeux vidéo, avec les utilisateurs qui les ont dans leur collection (TP6).
      */
     #[Route(name: 'app_jeu_video_index', methods: ['GET'])]
     public function index(JeuVideoRepository $jeuVideoRepository): Response
     {
         return $this->render('jeu_video/index.html.twig', [
-            'jeu_videos' => $jeuVideoRepository->findBy([], ['titre' => 'ASC']),
+            'jeu_videos' => $jeuVideoRepository->findAllWithCollections(),
         ]);
     }
 

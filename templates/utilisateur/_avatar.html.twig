@@ -1,0 +1,8 @@
+{# Image de profil d'un utilisateur, ou ses initiales s'il n'en a pas.
+   Paramètres : utilisateur, taille (optionnel : 'lg' pour la page de profil). #}
+{% set avatar_class = 'avatar' ~ (taille|default('') == 'lg' ? ' avatar--lg' : '') %}
+{% if utilisateur.imageProfil %}
+    <img class="{{ avatar_class }}" src="{{ asset(utilisateur.imageProfil) }}" alt="Image de profil de {{ utilisateur.pseudonyme }}">
+{% else %}
+    <span class="{{ avatar_class }} avatar--initiales" aria-hidden="true">{{ utilisateur.prenom|first|upper }}{{ utilisateur.nom|first|upper }}</span>
+{% endif %}

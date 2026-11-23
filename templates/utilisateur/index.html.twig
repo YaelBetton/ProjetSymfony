@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Collections des utilisateurs{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/collection.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <h1>Collections des utilisateurs</h1>
+        <a class="btn btn--primary" href="{{ path('app_utilisateur_new') }}">Ajouter un utilisateur</a>
+    </div>
+
+    {# table--cards : sur tablette / téléphone, chaque ligne s'affiche en carte (cf. components.css) #}
+    <div class="table-responsive table-responsive--cards">
+        <table class="table table--cards">
+            <caption class="visually-hidden">Collections des utilisateurs ({{ utilisateurs|length }})</caption>
+            <thead>
+                <tr>
+                    <th scope="col" class="cell-media"><span class="visually-hidden">Image de profil</span></th>
+                    <th scope="col">Utilisateur</th>
+                    <th scope="col" class="text-end">Nombre de jeux</th>
+                    <th scope="col">En cours</th>
+                    <th scope="col" class="text-end">Valeur de la collection</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for utilisateur in utilisateurs %}
+                {% set nb_jeux = utilisateur.collects|length %}
+                <tr>
+                    <td class="cell-media">{{ include('utilisateur/_avatar.html.twig') }}</td>
+                    <td class="cell-title">
+                        <strong>{{ utilisateur.pseudonyme }}</strong>
+                        <span class="sous-texte">{{ utilisateur.nomComplet }}</span>
+                    </td>
+                    <td data-label="Nombre de jeux" class="text-end">{{ nb_jeux }}</td>
+                    <td data-label="En cours">
+                        {# Jeux auxquels l'utilisateur joue en ce moment (statut EN_COURS) #}
+                        {% set en_cours = utilisateur.collects|filter(c => c.statut.value == 'EN_COURS')|map(c => c.jeuVideo.titre) %}
+                        {% if en_cours is not empty %}
+                            {{ en_cours|join(', ') }}
+                        {% else %}
+                            <span class="texte-vide">Aucun</span>
+                        {% endif %}
+                    </td>
+                    <td data-label="Valeur de la collection" class="text-end nowrap">{{ utilisateur.totalPrixAchat|number_format(2, ',', ' ') }} €</td>
+                    <td class="cell-actions">
+                        <div class="actions actions--table">
+                            <a class="btn btn--secondary btn--sm" href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}">Voir la collection<span class="visually-hidden"> de {{ utilisateur.pseudonyme }}</span></a>
+                            <a class="btn btn--secondary btn--sm" href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">Modifier<span class="visually-hidden"> {{ utilisateur.pseudonyme }}</span></a>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6" class="table__empty">Aucun utilisateur enregistré.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
